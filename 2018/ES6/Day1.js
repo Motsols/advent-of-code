@@ -2,13 +2,11 @@ const fs = require('fs');
 
 class Part1{
     constructor(input){
-        this.Frequency = 0;
         this.Input = input;
     }
 
     answer(){
-        this.Input.map(n => this.Frequency += parseInt(n));
-        return this.Frequency;
+        return this.Input.reduce((total,frequency) => total + parseInt(frequency), 0);
     }
 }
 
@@ -59,7 +57,7 @@ class Reader{
 
 const reader = new Reader('Day1Input.txt');
 
-// const puzzle = new Part1(reader.getFormattedInput()); // 543
-const puzzle = new Part2(reader.getFormattedInput()); // 621
+const puzzle = new Part1(reader.getFormattedInput()); // 543
+// const puzzle = new Part2(reader.getFormattedInput()); // 621
 
 console.log(puzzle.answer());
