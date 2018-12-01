@@ -7,14 +7,8 @@ class Part1{
     }
 
     answer(){
-        this.iterate();
+        this.Input.map(n => this.Frequency += parseInt(n));
         return this.Frequency;
-    }
-
-    iterate(){
-        this.Input.forEach(frequency => {
-            this.Frequency += parseInt(frequency);
-        });
     }
 }
 
@@ -23,28 +17,27 @@ class Part2 {
         this.Frequency = 0;
         this.RecurringFrequencyFound = false;
         this.RecurringFrequency = 0;
+        this.SeenFrequencies = [0];
         this.Input = input;
     }
 
     answer(){
-        this.iterate();
+        while(!this.RecurringFrequencyFound){
+            this.Input.map(n => this.check(n));
+        }
+
         return this.RecurringFrequency;
     }
 
-    iterate(){
-        let seenFrequencies = [0];
-        while(!this.RecurringFrequencyFound){
-            this.Input.forEach(frequency => {
-                this.Frequency += parseInt(frequency);
+    check(frequency){
+        this.Frequency += parseInt(frequency);
 
-                if(!this.RecurringFrequencyFound && seenFrequencies.includes(this.Frequency)){
-                    this.RecurringFrequencyFound = true;
-                    this.RecurringFrequency = this.Frequency;
-                }
-    
-                seenFrequencies.push(this.Frequency);
-            });
+        if(!this.RecurringFrequencyFound && this.SeenFrequencies.includes(this.Frequency)){
+            this.RecurringFrequencyFound = true;
+            this.RecurringFrequency = this.Frequency;
         }
+
+        this.SeenFrequencies.push(this.Frequency)
     }
 }
 
@@ -66,7 +59,7 @@ class Reader{
 
 const reader = new Reader('Day1Input.txt');
 
-// const puzzle = new Part1(reader.getFormattedInput());
-const puzzle = new Part2(reader.getFormattedInput());
+// const puzzle = new Part1(reader.getFormattedInput()); // 543
+const puzzle = new Part2(reader.getFormattedInput()); // 621
 
 console.log(puzzle.answer());
