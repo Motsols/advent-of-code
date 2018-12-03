@@ -41,29 +41,6 @@ class Part2 {
         return this.FinalClaim;
     }
 
-    verifyClaim(id){
-        var claim = this.Input.filter(x => x[0] === id)[0];
-        console.log(claim);
-
-        let startRow = Number(claim[2]);
-        let startColumn = Number(claim[1]);
-        let width = Number(claim[3]);
-        let height = Number(claim[4]);
-        let intersectsWithClaims = false;
-
-        for(let row = startRow; row < startRow + height; row++){
-            for(let column = startColumn; column < startColumn + width; column++){
-                if(this.Grid[`${row},${column}`] > 1){
-                    intersectsWithClaims = true;
-                }
-            }
-        }
-        if(!intersectsWithClaims){
-            this.FinalClaim = claim[0];
-            console.log(claim[0]);
-        }
-    }
-
     calculateInchNumbers(bounds){
         let startRow = Number(bounds[2]);
         let startColumn = Number(bounds[1]);
@@ -85,6 +62,27 @@ class Part2 {
         }
         if(!intersectsWithClaims){
             this.ViableClaims.push(claim);
+        }
+    }
+
+    verifyClaim(id){
+        var claim = this.Input.filter(x => x[0] === id)[0];
+
+        let startRow = Number(claim[2]);
+        let startColumn = Number(claim[1]);
+        let width = Number(claim[3]);
+        let height = Number(claim[4]);
+        let intersectsWithClaims = false;
+
+        for(let row = startRow; row < startRow + height; row++){
+            for(let column = startColumn; column < startColumn + width; column++){
+                if(this.Grid[`${row},${column}`] > 1){
+                    intersectsWithClaims = true;
+                }
+            }
+        }
+        if(!intersectsWithClaims){
+            this.FinalClaim = claim[0];
         }
     }
 }
